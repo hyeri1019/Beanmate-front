@@ -29,6 +29,7 @@ function Board() {
         }
 
     const handleSearch = useCallback(async (option, keyword, page) => {
+        console.log('???='+page)
         setOption(option)
         setKeyword(keyword)
         setPage(page)

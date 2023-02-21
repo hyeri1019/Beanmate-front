@@ -18,7 +18,7 @@ import {useNavigate} from "react-router-dom";
                 <SearchKeyword onChange={setKeyword} />
                 <button onClick={()=> {
                     setPage(1);
-                    onSearch(option, keyword, page);
+                    onSearch(option, keyword, 1);
                 }}>검색</button>
             </>
         )
