@@ -18,17 +18,17 @@ function Login(props) {
 
     const login = (e) => {
         e.preventDefault();
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('accessToken');
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('accessToken');
         axios
             .post('http://localhost:8080/auth/login', { // 로그인 요청
                 email: userInfo.email,
                 password: userInfo.password
             })
             .then(response => {
-                    sessionStorage.setItem("accessToken",response.data.accessToken)
-                    sessionStorage.setItem("refreshToken",response.data.refreshToken)
+                    localStorage.setItem("accessToken",response.data.accessToken)
+                    localStorage.setItem("refreshToken",response.data.refreshToken)
                     console.log(response.data.accessToken);
-                    console.log(sessionStorage.getItem("accessToken"))
+                    console.log(localStorage.getItem("accessToken"))
                 navigate('/');}
                 );
     };

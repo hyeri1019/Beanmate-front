@@ -7,7 +7,7 @@ function Main() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        const token = sessionStorage.getItem("accessToken");
+        const token = localStorage.getItem("accessToken");
         if (token) {
             setIsLoggedIn(true);
         }
@@ -20,7 +20,9 @@ function Main() {
             {
                 isLoggedIn ? (
                     <button onClick={() => {
-                        sessionStorage.removeItem("accessToken");
+                        localStorage.removeItem("accessToken");
+                        localStorage.removeItem("refreshToken");
+                        localStorage.removeItem("accessTokenExpiresIn");
                         setIsLoggedIn(false);
                         navigate("/");
                     }}>

@@ -10,38 +10,39 @@ import Login from "./component/Login";
 import Test from "./component/Test";
 
 
+
 import axios  from "axios";
 
 
 
 function App() {
 
-    const [accessToken, setAccessToken] = useState(sessionStorage.getItem("accessToken"));
-    const [refreshToken, setRefreshToken] = useState(sessionStorage.getItem("refreshToken"));
+    const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken"));
+    const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refreshToken"));
     console.log('1 accessToken='+accessToken);
     console.log('1 refreshToken='+refreshToken);
 
 
-    useEffect(() => {
-        console.log('login check')
 
-
-        //  JSON 형식으로 변환하여 Request Header 에 토큰정보를 담아 보냄
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-            axios.post('http://localhost:8080/auth/reissue',
-               {
-                     accessToken: accessToken,
-                     refreshToken: refreshToken
-
-                })
-                .then(res => {
-                    console.log('2='+res.data.accessToken)
-                })
-                .catch(error => {
-                    console.log(error.response.data.message)
-                })
-
-    },[accessToken,refreshToken])
+    // useEffect(() => {
+    //     console.log('login check')
+    //
+    //
+    //     //  JSON 형식으로 변환하여 Request Header 에 토큰정보를 담아 보냄
+    //         axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+    //         axios.post('http://localhost:8080/auth/reissue',
+    //            {
+    //                  accessToken: accessToken,
+    //                  refreshToken: refreshToken
+    //
+    //             })
+    //             .then(res => {
+    //             })
+    //             .catch(error => {
+    //                 console.log(error.response.data.message)
+    //             })
+    //
+    // },[accessToken,refreshToken])
 
     return (
         <BrowserRouter>

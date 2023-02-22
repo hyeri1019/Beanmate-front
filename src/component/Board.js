@@ -1,15 +1,16 @@
 import {useState, useEffect, useCallback} from "react";
 import axios from 'axios'
 import {useNavigate, useParams} from "react-router-dom";
-import './Board.css'
-import SearchBar from './Search.js'
+import './Board.css';
+import SearchBar from './Search.js';
+import Api from "../customApi";
 
 
 function Board() {
     let {pages} = useParams();
     let navigate = useNavigate();
 
-    const options = ['title', 'content', 'writer'];
+    const options = ['제목', '제목+내용', '작성자'];
     const [option, setOption] = useState();
     const [keyword, setKeyword] = useState();
     const [page, setPage] = useState(0);
@@ -27,21 +28,24 @@ function Board() {
         }
 
 
+        /* useCallback 으로 최적화
+           서버에 1번만 요청하며, 같은 값은 재요청 하지 않음 */
     const handleSearch = useCallback(async (option, keyword, page) => {
+
         setOption(option)
         setKeyword(keyword)
-        setPage(page)
 
-       await axios.get('http://localhost:8080/boards?page='+page+'&option='+option+'&keyword='+keyword)
+       await Api.get('/boards?page='+page+'&option='+option+'&keyword='+keyword)
              .then(result => { setPaging(result.data.pagination)
                              setBoardList(result.data.posts) })
                 .catch(error => console.log('board error'))
 
-    },[page])
+    },[])
 
+    /* page,option, keyword 가 변경될 때마다 handleSearch() 실행 */
     useEffect(() => {
         handleSearch(option, keyword, page);
-    }, [option, keyword, page]);
+    }, [handleSearch, page, option, keyword]);
 
 
 
@@ -102,10 +106,7 @@ function Board() {
                 {arr.map((a,i)=>{
                     return(
                         <button onClick={async ()=>{
-                            /* 검색결과를 유지하며 페이징하기 위해 option, keyword 전달
-                               a : 클릭한 page 값 */
-                            setPage(a);
-                            await handleSearch(option,keyword,page);
+                            setPage(a)
                             navigate('/board/'+a)
                         }}>
                             {a}

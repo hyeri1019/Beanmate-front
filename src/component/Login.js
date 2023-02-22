@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
+import Api from "../customApi";
 
 
 function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
@@ -15,14 +16,17 @@ function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
     
     const login = (e) => {
         e.preventDefault();
-        axios
-            .post('http://localhost:8080/auth/login', { // 로그인 요청
+        Api
+            .post('/auth/login', { // 로그인 요청
                 email: userInfo.email,
                 password: userInfo.password
             })
             .then(response => {
-                    sessionStorage.setItem("accessToken", response.data.accessToken);
-                    sessionStorage.setItem("refreshToken", response.data.refreshToken);
+                    localStorage.setItem("email",userInfo.email);
+
+                    localStorage.setItem("accessToken", response.data.accessToken);
+                    localStorage.setItem("refreshToken", response.data.refreshToken);
+                    localStorage.setItem("accessTokenExpiresIn", response.data.accessTokenExpiresIn);
                     setAccessToken(response.data.accessToken);
                     setRefreshToken(response.data.refreshToken);
                     navigate('/');}
@@ -30,7 +34,7 @@ function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
     };
 
     useEffect(() => {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('accessToken')}`;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
     }, [accessToken,refreshToken]);
 
 
