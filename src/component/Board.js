@@ -12,9 +12,8 @@ function Board() {
     const options = ['title', 'content', 'writer'];
     const [option, setOption] = useState();
     const [keyword, setKeyword] = useState();
-
-
     const [page, setPage] = useState(0);
+
     const [boardList, setBoardList] = useState([{
         pno: '', title: '', writer: '', viewCnt: ''
     }])
@@ -22,14 +21,13 @@ function Board() {
         totalPages: 0, startPage: 0, endPage: 0, hasNext: false, hasPrev: false, prevIndex: 0, nextIndex: 0
     }])
 
-
     const arr = [];
         for (let i = paging.startPage; i <= paging.endPage; i++) {
             arr.push(i);
         }
 
+
     const handleSearch = useCallback(async (option, keyword, page) => {
-        console.log('???='+page)
         setOption(option)
         setKeyword(keyword)
         setPage(page)
@@ -39,11 +37,11 @@ function Board() {
                              setBoardList(result.data.posts) })
                 .catch(error => console.log('board error'))
 
-    },[page, option, keyword])
+    },[page])
 
     useEffect(() => {
         handleSearch(option, keyword, page);
-    }, [handleSearch]);
+    }, [option, keyword, page]);
 
 
 
@@ -104,10 +102,10 @@ function Board() {
                 {arr.map((a,i)=>{
                     return(
                         <button onClick={async ()=>{
-                            setPage(a);
                             /* 검색결과를 유지하며 페이징하기 위해 option, keyword 전달
                                a : 클릭한 page 값 */
-                            await handleSearch(option,keyword,a);
+                            setPage(a);
+                            await handleSearch(option,keyword,page);
                             navigate('/board/'+a)
                         }}>
                             {a}

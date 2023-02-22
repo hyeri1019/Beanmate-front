@@ -5,8 +5,6 @@ import {useNavigate} from "react-router-dom";
 
     function SearchBar({setPage, page, options, onSearch}) {
 
-        let navigate = useNavigate();
-
         const [option,setOption] = useState(options[0]);
         const [keyword, setKeyword] = useState('');
         console.log(option)
@@ -34,7 +32,6 @@ import {useNavigate} from "react-router-dom";
 
         /*  options[0] : 기본 옵션 '제목' */
         const [option, setOption] = useState(options[0]);
-        console.log(option)
         return (
             <select value={option} onChange={e => {
                 optionHandler(e.target.value);
@@ -56,7 +53,6 @@ import {useNavigate} from "react-router-dom";
 
 
         const[keyword, setKeyword] = useState('');
-        console.log(keyword)
         return (
             <input
                 type="text"

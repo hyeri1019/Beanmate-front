@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 
 
-function Login({accessToken, setAccessToken, setRefreshToken}) {
+function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
 
 
     const [userInfo, setUserInfo] = useState([{
@@ -31,7 +31,7 @@ function Login({accessToken, setAccessToken, setRefreshToken}) {
 
     useEffect(() => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('accessToken')}`;
-    }, [accessToken]);
+    }, [accessToken,refreshToken]);
 
 
     return (
