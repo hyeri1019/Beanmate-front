@@ -3,36 +3,41 @@ import moment from "moment";
 
 const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
 
-    const refreshToken = localStorage.getItem("refreshToken");
+    var refreshToken = await localStorage.getItem("refreshToken");
+    console.log('기존 rt '+refreshToken);
     const expireAt = moment(parseInt(localStorage.getItem('accessTokenExpiresIn')))
-                        .format("YYYY-MM-DD HH:mm:ss");
+        .format("YYYY-MM-DD HH:mm:ss");
 
     console.log('만료시간 : '+expireAt)
-    var accessToken = localStorage.getItem("accessToken");
+    var token = await localStorage.getItem("accessToken");
+    console.log('기존 at '+token)
 
 
     // accessToken 만료 && refreshToken 이 저장되어 있는 경우
     if (moment(expireAt).diff(moment()) < 0 && refreshToken) {
         console.log('expired')
 
-        const body = {
-            accessToken,
-            refreshToken,
-        };
 
         const { data } = await
             axios.post("http://localhost:8080/auth/reissue",
-                body);
+                { accessToken: token,
+                       refreshToken: refreshToken })
+                .then(res => {
+         localStorage.setItem("accessToken", res.data.accessToken);
+         console.log('new at : '+res.data.accessToken);
+         console.log('new at set : '+localStorage.getItem("accessToken"))
+         localStorage.setItem("refreshToken", res.data.refreshToken);
+         console.log('new rt : '+res.data.refreshToken);
+         console.log('new at set : '+localStorage.getItem("refreshToken"));
+         localStorage.setItem("accessTokenExpiresIn",res.data.accessTokenExpiresIn);
+         console.log(res.data.accessTokenExpiresIn)
+       }
+    )
 
-        accessToken = data.data.accessToken;
-        localStorage.setItem("accessToken", data.data.accessToken);
-        localStorage.setItem("accessTokenExpiresIn",
-            moment().add(1, "hour").format("YYYY-MM-DD HH:mm:ss")
-        );
     }
-
-        config.headers["Authorization"] = `Bearer ${accessToken}`; // 새로운 accessToken을 사용하여 요청 보내기
-        return config;
-    }
+    /* 새로운 accessToken 으로 요청 */
+    config.headers["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+    return config;
+}
 
 export { refresh };

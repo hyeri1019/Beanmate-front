@@ -10,17 +10,31 @@ import Login from "./component/Login";
 import Test from "./component/Test";
 
 
-
-import axios  from "axios";
-
-
-
 function App() {
 
     const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken"));
     const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refreshToken"));
-    console.log('1 accessToken='+accessToken);
-    console.log('1 refreshToken='+refreshToken);
+    const [accessTokenExpiresIn, setAccessTokenExpiresIn] = useState(localStorage.getItem("accessTokenExpiresIn"));
+
+
+    useEffect(() => {
+        const updateTokens = () => {
+            setAccessToken(localStorage.getItem('accessToken'));
+            setRefreshToken(localStorage.getItem('refreshToken'));
+            setAccessTokenExpiresIn(localStorage.getItem("accessTokenExpiresIn"));
+        }
+
+        window.addEventListener('storage', updateTokens);
+
+        console.log('1 accessToken='+accessToken);
+        console.log('1 refreshToken='+refreshToken);
+        console.log('1 accessTokenExpiresIn='+accessTokenExpiresIn);
+
+        return () => {
+            window.removeEventListener('storage', updateTokens);
+        };
+    }, [accessToken, refreshToken, accessTokenExpiresIn]);
+
 
 
 
