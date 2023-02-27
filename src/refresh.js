@@ -15,7 +15,6 @@ const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> 
 
     // accessToken 만료 && refreshToken 이 저장되어 있는 경우
     if (moment(expireAt).diff(moment()) < 0 && refreshToken) {
-        console.log('expired')
 
 
         const { data } = await

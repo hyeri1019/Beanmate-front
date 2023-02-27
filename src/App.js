@@ -4,7 +4,6 @@ import {Routes, Route, Link, useNavigate, Outlet, Router, BrowserRouter, useLoca
 import {TransitionGroup, CSSTransition, Transition} from 'react-transition-group';
 import Board from './component/Board.js'
 import Post from './component/Post.js'
-import LoginButton from './component/LoginButton.js'
 import Write from './component/Write.js'
 import SignUp from "./SignUp";
 import Login from "./component/Login";
@@ -53,8 +52,6 @@ function App() {
 
 
 
-
-
     return (
         <>
 
@@ -70,9 +67,6 @@ function App() {
                 </Routes>
         </BrowserRouter>
 
-
-
-            <LoginButton></LoginButton>
 
 
         </>

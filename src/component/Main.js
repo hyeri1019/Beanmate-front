@@ -1,10 +1,19 @@
-import {useLocation, useNavigate} from "react-router-dom";
 import  { useState, useEffect, useRef, useCallback } from 'react';
 import Api from "../customApi";
 
-import "../fade.css"
+
+import "../component/css/Main.css"
+import {useLocation, useNavigate} from "react-router-dom";
+import LoginButton from "./LoginButton";
+import PostModal from "./PostModal";
+import {CSSTransition} from "react-transition-group";
 
 function Main() {
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+
     const [list, setList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
@@ -12,45 +21,86 @@ function Main() {
     const obsRef = useRef(null);
 
     useEffect(() => {
-        console.log('??'+currentPage)
         setIsLoading(true);
         getPosts(currentPage).then((data) => {
             setList((prevList) => [...prevList, ...data.posts]);
-            setHasMore(data.pagination.hasNext);
+            setHasMore(data.pagination.hasPrev);
             setIsLoading(false);
         });
-    }, [currentPage,hasMore]);
+    }, [currentPage]);
 
-    const handleObserver = async(entries) => {
-         const target =  entries[0];
-        if (target.isIntersecting && hasMore) {
-             setCurrentPage((prevPage) => prevPage + 1);
+    const handleObserver = async (entries) => {
+        const target = entries[0];
+        console.log(target);
+        if (target.isIntersecting && hasMore && !isLoading) {
+            console.log("1++");
+            await setCurrentPage((prevPage) => prevPage + 1);
         }
     };
 
     useEffect(() => {
-        const observer = new IntersectionObserver(handleObserver, { threshold: 1 });
+        const observer = new IntersectionObserver(handleObserver, {threshold: 1});
         if (obsRef.current) observer.observe(obsRef.current);
         return () => observer.disconnect();
-    }, [hasMore,currentPage]);
+    }, [currentPage, hasMore, isLoading]);
 
     const getPosts = useCallback(async (page) => {
+        setIsLoading(true);
         const response = await Api.get(`/feeds?page=${page}`);
+        setIsLoading(false);
         return response.data;
-    }, [hasMore,currentPage]);
+    }, []);
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [selectedPost, setSelectedPost] = useState({});
+
+    const openModal = (post) => {
+        setSelectedPost(post);
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const handlePostClick = (post) => {
+        openModal(post);
+    };
 
     return (
-        <div className="wrap min-h-[100vh]">
-            {list.map((post) => (
-                <img src={`http://localhost:8080/uploads/${post.imageName}`} width="500px" height="300px" />
-            ))}
-            {isLoading && <div className="py-3 bg-blue-500 text-center">로딩 중</div>}
-            {!isLoading && hasMore && (
-                <div ref={obsRef} className="py-3 bg-red-500 text-white text-center">
-                    옵저버 Element
+        <>
+
+            <header className="head">
+                <a href={`/`} onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/')
+                }}>
+                    <img src={process.env.PUBLIC_URL + '/head.png'} alt="head"/></a>
+            </header>
+
+            <LoginButton/>
+
+            <CSSTransition key={location.key} classNames="fade2" timeout={200}>
+                <div className="post-container">
+                    {list.map((post) => (
+                        <div key={post.pno} className="post" onClick={() => handlePostClick(post)}>
+                            <img src={`http://localhost:8080/uploads/${post.imageName}`} alt="이미지"/>
+                        </div>
+                    ))}
                 </div>
+            </CSSTransition>
+
+            {isLoading && (
+                <img src={process.env.PUBLIC_URL + '/loading.png'} alt="loading"/>
             )}
-        </div>
+            {!isLoading && hasMore && (
+                <div ref={obsRef} className="py-3 bg-red-500 text-white text-center">옵저버 Element</div>
+            )}
+
+
+            <PostModal post={selectedPost} isOpen={modalIsOpen} onRequestClose={closeModal}/>
+
+        </>
     );
 }
 export default Main;

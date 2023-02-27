@@ -1,38 +1,39 @@
-import {useEffect, useState} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import {CustomCurrentLoginButton} from "./MyStyle";
 
 function LoginButton() {
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        const token = localStorage.getItem("accessToken");
-        if (token) {
-            setIsLoggedIn(true);
-        }
-    }, []);
+    const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("accessTokenExpiresIn"));
 
 
     return (
         <div className="loginButton">
-            {
-                isLoggedIn ? (
-                    <button onClick={() => {
+            {isLoggedIn ? (
+                <CustomCurrentLoginButton
+                    onClick={() => {
                         localStorage.removeItem("accessToken");
                         localStorage.removeItem("refreshToken");
                         localStorage.removeItem("accessTokenExpiresIn");
                         setIsLoggedIn(false);
-                        window.location.href = '/';
-                    }}>
-                        로그아웃
-                    </button>
-                ) : (
-                    <>
-                    </>
-                )
-            }
+                        navigate("/");
+                    }}
+                >
+                    로그아웃
+                </CustomCurrentLoginButton>
+            ) : (
+                <CustomCurrentLoginButton
+                    onClick={() => {
+                        navigate("/login", { state: { from: location.pathname } });
+                    }}
+                >
+                    로그인
+                </CustomCurrentLoginButton>
+            )}
         </div>
-    )
+    );
 }
-
 
 export default LoginButton;

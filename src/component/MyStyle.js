@@ -24,6 +24,19 @@ export const CustomLoginButton = styled(Button)({
     },
 });
 
+export const CustomCurrentLoginButton = styled(Button)({
+    color: '#fff',
+    backgroundColor: '#fdb8b9',
+    width: '100px',
+    height: '50px',
+    margin : '20px 0 30px 0',
+    '&:hover': {
+        backgroundColor: '#c1a5fc',
+
+    },
+});
+
+
 export const CustomCategoryButton = styled(Button)({
     justifyContent: 'center',
     alignItems: 'center',
