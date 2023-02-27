@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import Api from "../customApi";
+import { TextField } from '@mui/material';
+import "./Login.css"
+import { CustomLoginButton } from "./MyStyle";
 
 
 function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
@@ -12,6 +15,8 @@ function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
     }]);
 
     let navigate = useNavigate();
+
+
 
     
     const login = (e) => {
@@ -33,27 +38,21 @@ function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
                 );
     };
 
-    useEffect(() => {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
-    }, [accessToken,refreshToken]);
 
 
     return (
 
         <form onSubmit={login}>
-            <label>
-                Email:
-                <input type="email" value={userInfo.email}
+            <br/>
+            <div className="login-box">
+                <TextField label="email" type="email" value={userInfo.email}
                        onChange={e => setUserInfo({...userInfo, email: e.target.value})}/>
-            </label>
             <br/>
-            <label>
-                비밀번호:
-                <input type="password" value={userInfo.password}
+                <TextField label="password" type="password" value={userInfo.password}
                        onChange={e => setUserInfo({...userInfo, password: e.target.value})}/>
-            </label>
+            </div>
             <br/>
-            <button type="submit">로그인</button>
+            <CustomLoginButton type="submit">로그인</CustomLoginButton>
         </form>
 
 

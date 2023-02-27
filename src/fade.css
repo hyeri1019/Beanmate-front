@@ -1,0 +1,25 @@
+.fade-enter {
+    position: absolute;
+    opacity:0;
+    transition-property:opacity;
+    transition-duration:2s;
+    transition-timing-function:steps(3, end);
+}
+
+.fade-enter-active {
+    position: absolute;
+    opacity: 1;
+    transition-duration:500ms;
+    transition-timing-function:steps(2, end);
+}
+
+.fade-exit {
+    opacity: 1;
+    transition: opacity 1000ms linear;
+
+}
+
+.fade-exit-active {
+    opacity: 10;
+    transition: opacity 1000ms linear;
+}

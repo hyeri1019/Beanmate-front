@@ -1,20 +1,36 @@
 import './App.css';
 import {useCallback, useEffect, useState} from "react";
-import {Routes, Route, Link, useNavigate, Outlet, Router, BrowserRouter} from 'react-router-dom'
+import {Routes, Route, Link, useNavigate, Outlet, Router, BrowserRouter, useLocation} from 'react-router-dom'
+import {TransitionGroup, CSSTransition, Transition} from 'react-transition-group';
 import Board from './component/Board.js'
 import Post from './component/Post.js'
-import Main from './component/Main.js'
+import LoginButton from './component/LoginButton.js'
 import Write from './component/Write.js'
 import SignUp from "./SignUp";
 import Login from "./component/Login";
-import Test from "./component/Test";
+import MyPage from "./component/MyPage";
+import Main from "./component/Main";
+import "./App.css"
+import "./fade.css"
+
+import { Drawer, Paper, List, ListItem, ListItemIcon, ListItemText, ToggleButton, ToggleButtonGroup, Slide, useScrollTrigger } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import axios from "axios";
+
 
 
 function App() {
 
+
+    /*    토큰    */
     const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken"));
     const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refreshToken"));
     const [accessTokenExpiresIn, setAccessTokenExpiresIn] = useState(localStorage.getItem("accessTokenExpiresIn"));
+
+    useEffect(() => {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
+    }, [accessToken,refreshToken]);
 
 
     useEffect(() => {
@@ -38,39 +54,30 @@ function App() {
 
 
 
-    // useEffect(() => {
-    //     console.log('login check')
-    //
-    //
-    //     //  JSON 형식으로 변환하여 Request Header 에 토큰정보를 담아 보냄
-    //         axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-    //         axios.post('http://localhost:8080/auth/reissue',
-    //            {
-    //                  accessToken: accessToken,
-    //                  refreshToken: refreshToken
-    //
-    //             })
-    //             .then(res => {
-    //             })
-    //             .catch(error => {
-    //                 console.log(error.response.data.message)
-    //             })
-    //
-    // },[accessToken,refreshToken])
 
     return (
+        <>
+
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Main></Main>}></Route>
-                <Route path="/board/:pages" element={<Board></Board>}></Route>
-                <Route path="/board/:pages/:pno" element={<Post></Post>}></Route>
-                <Route path="/board" element={<Write></Write>}></Route>
-                <Route path="/sign-up" element={<SignUp></SignUp>}></Route>
-                <Route path="/test" element={<Test></Test>}></Route>
-                <Route path="/login" element={<Login accessToken={accessToken} refreshToken={refreshToken} setAccessToken={setAccessToken} setRefreshToken={setRefreshToken}></Login>}></Route>
-            </Routes>
+                <Routes>
+                    <Route path="/" element={<Main></Main>}></Route>
+                    <Route path="/board/:category/:pages" element={<Board></Board>}></Route>
+                    <Route path="/board/:category/:pages/:pno" element={<Post></Post>}></Route>
+                    <Route path="/board/:category" element={<Write></Write>}></Route>
+                    <Route path="/sign-up" element={<SignUp></SignUp>}></Route>
+                    <Route path="/me" element={<MyPage></MyPage>}></Route>
+                    <Route path="/login" element={<Login accessToken={accessToken} refreshToken={refreshToken} setAccessToken={setAccessToken} setRefreshToken={setRefreshToken}></Login>}></Route>
+                </Routes>
         </BrowserRouter>
-    )
+
+
+
+            <LoginButton></LoginButton>
+
+
+        </>
+
+    );
 }
 
 export default App;

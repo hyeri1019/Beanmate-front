@@ -31,6 +31,8 @@ const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> 
          console.log('new at set : '+localStorage.getItem("refreshToken"));
          localStorage.setItem("accessTokenExpiresIn",res.data.accessTokenExpiresIn);
          console.log(res.data.accessTokenExpiresIn)
+
+                    window.location.reload()
        }
     )
 

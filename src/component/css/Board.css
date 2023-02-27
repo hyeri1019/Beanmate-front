@@ -1,0 +1,110 @@
+.head > a {
+    position: relative;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: left;
+    height: 100px;
+
+}
+
+
+
+.category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fdb8b9;
+    padding: 10px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.category:active {
+    background-color: #c1a5fc;
+}
+
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+
+.SearchBar {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+
+
+}
+
+.writeButton {
+    display: flex;
+    justify-content: right;
+}
+
+
+
+.boardContainer {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    min-height: 400px;
+
+
+}
+
+.boardPost {
+    font-family: "Noto Sans KR", sans-serif;
+    min-height: 20vh;
+    width: 18%;
+    margin-right: 40px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.postImage img {
+    max-width: 100%;
+    max-height: 150px;
+}
+
+.postImage img:hover {
+    border: 1px solid #fdb8b9;
+}
+
+.postTitle {
+    font-family: 'Dongle', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.postWriter,
+.postViewCnt {
+    font-family: 'Dongle', sans-serif;
+    font-size: 1rem;
+    color: #666;
+}
+
+.my-page {
+    cursor: pointer;
+    font-family: 'Dongle', sans-serif;
+}
+
+.icon {
+    width: 30%;
+}
+.icon > img {
+    width: 40px;
+}

@@ -1,6 +1,7 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback} from "react";
 import axios from 'axios'
 import {useNavigate, useParams} from "react-router-dom";
+import Api from "../customApi";
 
 function Post(props) {
 
@@ -20,7 +21,7 @@ function Post(props) {
 
 
     const [post, setPost] = useState([{
-        pno: '', title: '', writer: '', content:'', viewCnt: ''
+        pno: '', title: '', writer: '', content:'', viewCnt: '', imagePath: '', imageName: ''
 }])
 
     let modifyHandler = (e) => {
@@ -44,27 +45,34 @@ function Post(props) {
     }
 
     console.log(modBtn)
-    console.log(post)
+    console.log('postNo='+post.pno)
 
     /*   선택한 게시물 읽기   */
-    useEffect(()=>{
-        axios.get('http://localhost:8080/board?pno='+Number(pno))
-            .then(res=>setPost(res.data),
-            console.log('get'))
-    },[])
+    useEffect(  ()=>{
+          Api.get('http://localhost:8080/board?pno='+Number(pno))
+            .then(res=>setPost(res.data))
+    },[pno])
 
 
     /*    게시물 삭제   */
     useEffect(()=>{
-        if(delBtn===true)
-        axios.delete('http://localhost:8080/board?pno='+pno)
+        if(delBtn === true) {
+            Api.delete(`http://localhost:8080/board?pno=${pno}`)
+                .then(() => {
+                    alert('게시물이 삭제되었습니다.');
+                    navigate('/board/1');
+                })
+                .catch(() => {
+                    alert('작성자만 삭제 할 수 있습니다.');
+                });
+        }
     },[delBtn])
 
 
     /*    게시물 수정    */
     useEffect(()=>{
         if(modBtn===true)
-        axios.patch('http://localhost:8080/board?pno=' + pno,
+        Api.patch('http://localhost:8080/board?pno=' + pno,
             {
                 title: post.title, content: post.content
             },
@@ -74,6 +82,7 @@ function Post(props) {
     },[modSubmit])
 
     return (
+
     <div className="post-area">
             <p>no : {pno}</p>
             <input type="text" name="title" defaultValue = {post.title}
@@ -82,8 +91,11 @@ function Post(props) {
             <input type="text" name="content" defaultValue ={post.content}
                         onChange={modifyHandler}/>
 
-            <div className="modify-post">
+        <img src={`http://localhost:8080/uploads/${post.imageName}`} alt="이미지" />
 
+
+
+            <div className="modify-post">
                 {showModBtn && <button onClick={()=>{
                     setModBtn(true)
                     handleClick(modBtn)}}
@@ -96,6 +108,7 @@ function Post(props) {
 
             <div className="remove-post">
                 <button onClick={()=>{
+                    if(window.confirm('게시물을 삭제하시겠습니까?'))
                     setDelBtn(true)
                 }}>삭제</button>
             </div>
@@ -103,7 +116,6 @@ function Post(props) {
             <div className="listBtn">
                 <button onClick={listButton}>목록</button>
             </div>
-
         </div>
     )
 }
