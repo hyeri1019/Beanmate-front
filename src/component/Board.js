@@ -10,19 +10,8 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import {CustomButton, CustomCategoryButton, CustomList, CustomListItemButton} from './MyStyle';
 import {TransitionGroup, CSSTransition} from "react-transition-group";
-import {
-    Drawer,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Paper,
-    Slide,
-    ToggleButton,
-    ToggleButtonGroup
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+
+import LoginButton from "./LoginButton";
 
 
 function Board() {
@@ -31,7 +20,12 @@ function Board() {
 
 
     let {pages} = useParams();
-    let {param} = useParams();
+    console.log('pages='+pages)
+    let {category} = useParams();
+    console.log(category)
+
+    const [page, setPage] = useState(0);
+
     let navigate = useNavigate();
 
 
@@ -39,10 +33,7 @@ function Board() {
     const options = ['제목', '제목+내용', '작성자'];
     const [option, setOption] = useState();
     const [keyword, setKeyword] = useState();
-    const [page, setPage] = useState(0);
 
-    const [categories, setCategories] = useState(['food','healthy','sand','toy']);
-    const [category, setCategory] = useState('main');
 
 
     const [boardList, setBoardList] = useState([{
@@ -79,20 +70,8 @@ function Board() {
     /* page,option, keyword 가 변경될 때마다 handleSearch() 실행 */
     useEffect(() => {
         handleSearch(category, option, keyword, page);
-    }, [handleSearch, page, option, keyword, category]);
+    }, [handleSearch, page, option, keyword]);
 
-
-    /*   토글창    */
-    const [menuOpen, setMenuOpen] = useState(false);
-
-
-    const handleMenuOpen = () => {
-        setMenuOpen(true);
-    };
-
-    const handleMenuClose = () => {
-        setMenuOpen(false);
-    };
 
 
     return (
@@ -104,66 +83,11 @@ function Board() {
                     <img src={process.env.PUBLIC_URL + '/head.png'} alt="head" /></a>
             </header>
 
+        <LoginButton></LoginButton>
 
-        {categories.map((a, i) => (
-                    <CustomCategoryButton className="category"
-                        onClick={async () => {
-                        await setPage(1);
-                        setCategory(a);
-                        await navigate(`/board/${a}/1`);
-
-                    }}>
-                        {a}
-                    </CustomCategoryButton>
-                            ))}
 
 
         <div className="board">
-
-            <div className="menu-toggle">
-                <ToggleButtonGroup
-                    orientation="vertical"
-                    value={menuOpen}
-                    exclusive
-                    onChange={(event, newValue) => {
-                        if (newValue !== null) {
-                            setMenuOpen(newValue);
-                        }
-                    }}
-                >
-                    <ToggleButton value={true} onClick={handleMenuOpen}>
-                        <MenuIcon />
-                    </ToggleButton>
-                </ToggleButtonGroup>
-            </div>
-
-            <Drawer
-                anchor="right"
-                open={menuOpen}
-                onClose={handleMenuClose}
-                PaperProps={{
-                    style: { width: 250, backgroundColor: '#fdb8b9' },
-
-                }}
-                ModalProps={{
-                    BackdropProps: { style: { backgroundColor: "rgba(255,255,255,0)", }}}}>
-
-                <Slide direction="left" in={menuOpen} mountOnEnter unmountOnExit>
-                    <Paper>
-                        <CustomList>
-                            <CustomListItemButton className="my-page" onClick={()=>{
-                                    navigate('/me')}
-                            }>
-                                <ListItemIcon className="icon">
-                                    <img src={process.env.PUBLIC_URL + '/menucon.png'} alt="mypage" />
-                                </ListItemIcon>
-                                <ListItemText primary="내 정보"
-                                              primaryTypographyProps={{ style: { fontFamily: 'Dongle', fontSize:'30px' } }}/>
-                            </CustomListItemButton>
-                        </CustomList>
-                    </Paper>
-                </Slide>
-            </Drawer>
 
 
             <TransitionGroup>

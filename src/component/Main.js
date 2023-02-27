@@ -2,16 +2,23 @@ import  { useState, useEffect, useRef, useCallback } from 'react';
 import Api from "../customApi";
 
 
+
 import "../component/css/Main.css"
 import {useLocation, useNavigate} from "react-router-dom";
 import LoginButton from "./LoginButton";
 import PostModal from "./PostModal";
-import {CSSTransition} from "react-transition-group";
+
+
+import {Drawer, List, ListItem, ListItemText, Toolbar} from "@mui/material";
+import {CustomButton, CustomCategoryButton, CustomDrawer, CustomList, CustomListItemButton} from './MyStyle';
+import MenuIcon from "@mui/icons-material/Menu";
+import Board from "./Board";
 
 function Main() {
 
     const navigate = useNavigate();
     const location = useLocation();
+
 
 
     const [list, setList] = useState([]);
@@ -51,8 +58,10 @@ function Main() {
         return response.data;
     }, []);
 
+    /*    모달창    */
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedPost, setSelectedPost] = useState({});
+
 
     const openModal = (post) => {
         setSelectedPost(post);
@@ -67,6 +76,11 @@ function Main() {
         openModal(post);
     };
 
+
+    const [categories, setCategories] = useState(['main','healthy','sand','toy']);
+    const [category, setCategory] = useState('main');
+
+
     return (
         <>
 
@@ -78,9 +92,30 @@ function Main() {
                     <img src={process.env.PUBLIC_URL + '/head.png'} alt="head"/></a>
             </header>
 
-            <LoginButton/>
+            <div className="login-button">
+            <LoginButton />
+            </div>
 
-            <CSSTransition key={location.key} classNames="fade2" timeout={200}>
+
+            <div className="menu">
+                    <Drawer className="menu-bar"
+                        variant="permanent">
+                        <div>
+                            <CustomList className="menu-line">
+                                {categories.map((a, i) => (
+                                <CustomListItemButton button onClick={async()=>{
+                                    setCategory(a);
+                                    await navigate(`/board/${a}/1`);
+                                }}>
+                                    <ListItemText primary={a}></ListItemText>
+                                </CustomListItemButton>
+                                    ))}
+                            </CustomList>
+                        </div>
+                    </Drawer>
+            </div>
+
+
                 <div className="post-container">
                     {list.map((post) => (
                         <div key={post.pno} className="post" onClick={() => handlePostClick(post)}>
@@ -88,7 +123,6 @@ function Main() {
                         </div>
                     ))}
                 </div>
-            </CSSTransition>
 
             {isLoading && (
                 <img src={process.env.PUBLIC_URL + '/loading.png'} alt="loading"/>
