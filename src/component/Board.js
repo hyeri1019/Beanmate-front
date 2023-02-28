@@ -59,6 +59,7 @@ function Board() {
 
         setOption(option)
         setKeyword(keyword)
+        console.log('dd')
 
        await Api.get('/boards?category='+category+'&page='+page+'&option='+option+'&keyword='+keyword)
              .then(res => { setBoardList(res.data.posts);
