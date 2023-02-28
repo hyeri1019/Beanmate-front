@@ -1,4 +1,4 @@
-import  { useState, useEffect, useRef, useCallback } from 'react';
+import {useState, useEffect, useRef, useCallback, useContext} from 'react';
 import Api from "../customApi";
 
 
@@ -7,10 +7,19 @@ import "../component/css/Main.css"
 import {useLocation, useNavigate} from "react-router-dom";
 import LoginButton from "./LoginButton";
 import PostModal from "./PostModal";
+import {CategoryContext} from "../CategoryContext";
+import CategoryMenu from "./CategoryMenu";
 
 
-import {Drawer, List, ListItem, ListItemText, Toolbar} from "@mui/material";
-import {CustomButton, CustomCategoryButton, CustomDrawer, CustomList, CustomListItemButton} from './MyStyle';
+import {Drawer, List, ListItem, ListItemText, Paper, Toolbar} from "@mui/material";
+import {
+    CustomButton,
+    CustomCategoryButton,
+    CustomDrawer,
+    CustomList,
+    CustomListItemButton, CustomListItemText,
+    CustomPaper
+} from './MyStyle';
 import MenuIcon from "@mui/icons-material/Menu";
 import Board from "./Board";
 
@@ -77,8 +86,10 @@ function Main() {
     };
 
 
-    const [categories, setCategories] = useState(['main','healthy','sand','toy']);
-    const [category, setCategory] = useState('main');
+
+    /* 상위 컴포넌트에서 받아옴*/
+    const { category, setCategory } = useContext(CategoryContext);
+    const { categories } = useContext(CategoryContext);
 
 
     return (
@@ -96,24 +107,27 @@ function Main() {
             <LoginButton />
             </div>
 
+            <CategoryMenu></CategoryMenu>
 
-            <div className="menu">
-                    <Drawer className="menu-bar"
-                        variant="permanent">
-                        <div>
-                            <CustomList className="menu-line">
-                                {categories.map((a, i) => (
-                                <CustomListItemButton button onClick={async()=>{
-                                    setCategory(a);
-                                    await navigate(`/board/${a}/1`);
-                                }}>
-                                    <ListItemText primary={a}></ListItemText>
-                                </CustomListItemButton>
-                                    ))}
-                            </CustomList>
-                        </div>
-                    </Drawer>
-            </div>
+            {/*<div className="category-menu">*/}
+            {/*        <Drawer className="menu-bar" variant="permanent">*/}
+            {/*            <CustomPaper>*/}
+            {/*            <div>*/}
+            {/*                <CustomList className="menu-line">*/}
+            {/*                    {categories.map((a, i) => (*/}
+            {/*                    <CustomListItemButton  button onClick={async()=>{*/}
+            {/*                        setCategory(a);*/}
+            {/*                        await navigate(`/board/${category}/1`);*/}
+            {/*                    }}>*/}
+            {/*                        <ListItemText primary={a}></ListItemText>*/}
+            {/*                    </CustomListItemButton>*/}
+            {/*                        ))}*/}
+            {/*                </CustomList>*/}
+            {/*            </div>*/}
+            {/*            </CustomPaper>*/}
+
+            {/*        </Drawer>*/}
+            {/*</div>*/}
 
 
                 <div className="post-container">

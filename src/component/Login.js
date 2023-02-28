@@ -5,7 +5,6 @@ import Api from "../customApi";
 import { TextField } from '@mui/material';
 import "./Login.css"
 import { CustomLoginButton } from "./MyStyle";
-import LoginButton from "./LoginButton";
 
 
 function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
@@ -18,7 +17,7 @@ function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
     let navigate = useNavigate();
 
 
-
+    console.log(localStorage.getItem("email"));
 
     
     const login = (e) => {

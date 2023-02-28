@@ -15,13 +15,15 @@
     margin-left: 130px;
 }
 
-.menu {
+.category-menu {
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     width: 250px;
+
 }
+
 .menu-line {
     display: flex;
     flex-wrap: wrap;

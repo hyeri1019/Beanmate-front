@@ -1,4 +1,4 @@
-import {useState, useEffect, useCallback} from "react";
+import {useState, useEffect, useCallback, useContext} from "react";
 import axios from 'axios'
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import SearchBar from './Search.js';
@@ -8,10 +8,12 @@ import "../fade.css"
 import "./css/Board.css";
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import {CustomButton, CustomCategoryButton, CustomList, CustomListItemButton} from './MyStyle';
+import {CustomButton, CustomCategoryButton, CustomList, CustomListItemButton, CustomPaper} from './MyStyle';
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 
 import LoginButton from "./LoginButton";
+import {CategoryContext} from "../CategoryContext";
+import {Drawer, ListItemText} from "@mui/material";
 
 
 function Board() {
@@ -21,8 +23,6 @@ function Board() {
 
     let {pages} = useParams();
     console.log('pages='+pages)
-    let {category} = useParams();
-    console.log(category)
 
     const [page, setPage] = useState(0);
 
@@ -44,6 +44,8 @@ function Board() {
         totalPages: 0, startPage: 0, endPage: 0, hasNext: false, hasPrev: false, prevIndex: 0, nextIndex: 0
     }])
 
+    const { category, setCategory } = useContext(CategoryContext);
+    const { categories } = useContext(CategoryContext);
 
     const arr = [];
         for (let i = paging.startPage; i <= paging.endPage; i++) {
@@ -70,7 +72,7 @@ function Board() {
     /* page,option, keyword 가 변경될 때마다 handleSearch() 실행 */
     useEffect(() => {
         handleSearch(category, option, keyword, page);
-    }, [handleSearch, page, option, keyword]);
+    }, [handleSearch, page, option, keyword, category]);
 
 
 
@@ -84,6 +86,26 @@ function Board() {
             </header>
 
         <LoginButton></LoginButton>
+
+        {/*<div className="category-menu">*/}
+        {/*    <Drawer className="menu-bar"*/}
+        {/*            variant="permanent">*/}
+        {/*        <CustomPaper>*/}
+        {/*        <div>*/}
+        {/*            <CustomList className="menu-line">*/}
+        {/*                {categories.map((a, i) => (*/}
+        {/*                    <CustomListItemButton button onClick={async()=>{*/}
+        {/*                        setCategory(a);*/}
+        {/*                        await navigate(`/board/${a}/1`);*/}
+        {/*                    }}>*/}
+        {/*                        <ListItemText primary={a}></ListItemText>*/}
+        {/*                    </CustomListItemButton>*/}
+        {/*                ))}*/}
+        {/*            </CustomList>*/}
+        {/*        </div>*/}
+        {/*        </CustomPaper>*/}
+        {/*    </Drawer>*/}
+        {/*</div>*/}
 
 
 

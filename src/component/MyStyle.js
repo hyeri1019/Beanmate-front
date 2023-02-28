@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
-import { Button, TableCell, ListItem, List } from '@mui/material';
+import {Button, TableCell, ListItem, List, ListItemText} from '@mui/material';
 import { Drawer, Paper } from "@mui/material";
-
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 
 
 export const CustomButton = styled(Button)({
@@ -60,20 +60,27 @@ export const CustomList = styled(List)({
 
 export const CustomListItemButton = styled(ListItem)({
     color: '#fff',
-    '&:hover': {
+        '&:hover': {
         color: '#c1a5fc',
     },
 
-})
-
-
-
-
-export const CustomTableCell = styled(TableCell)({
-    backgroundColor: '#f2eeff',
-    width: '10%',
-    '& img': {
-        maxWidth: '100%',
-    },
 });
 
+export const CustomPaper = styled(Paper)({
+    backgroundColor: '#fdb8b9',
+    height: '100%',
+});
+
+
+export const CustomAccordion = styled(Accordion)({
+    backgroundColor: '#fdb8b9',
+    color: '#fff',
+        '&:hover': {
+        color: '#c1a5fc',
+    }
+});
+
+export const CustomTypography = styled(Typography)({
+    fontFamily: 'Dongle',
+    fontSize: '23px',
+});

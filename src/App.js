@@ -16,7 +16,7 @@ import { Drawer, Paper, List, ListItem, ListItemIcon, ListItemText, ToggleButton
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import axios from "axios";
-
+import {CategoryProvider} from "./CategoryContext";
 
 
 function App() {
@@ -57,13 +57,14 @@ function App() {
 
         <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Main></Main>}></Route>
-                    <Route path="/board/:category/:pages" element={<Board></Board>}></Route>
+                    <Route path="/" element={<CategoryProvider><Main></Main></CategoryProvider>}></Route>
+                    <Route path="/board/:category/:pages" element={<CategoryProvider><Board></Board></CategoryProvider>}></Route>
                     <Route path="/board/:category/:pages/:pno" element={<Post></Post>}></Route>
                     <Route path="/board/:category" element={<Write></Write>}></Route>
                     <Route path="/sign-up" element={<SignUp></SignUp>}></Route>
                     <Route path="/me" element={<MyPage></MyPage>}></Route>
                     <Route path="/login" element={<Login accessToken={accessToken} refreshToken={refreshToken} setAccessToken={setAccessToken} setRefreshToken={setRefreshToken}></Login>}></Route>
+
                 </Routes>
         </BrowserRouter>
 
