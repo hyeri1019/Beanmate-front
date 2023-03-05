@@ -22,7 +22,7 @@ import {CategoryProvider} from "./CategoryContext";
 function App() {
 
 
-    /*    토큰    */
+    /*    토큰      */
     const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken"));
     const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refreshToken"));
     const [accessTokenExpiresIn, setAccessTokenExpiresIn] = useState(localStorage.getItem("accessTokenExpiresIn"));
