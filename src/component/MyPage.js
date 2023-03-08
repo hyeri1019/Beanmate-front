@@ -24,8 +24,16 @@ function Mypage() {
         myPage();
     },[])
 
-    const modify = (e) => {
+    const update = (e) => {
         e.preventDefault();
+        Api.patch('/me', {
+            email: myInfo.email,
+            password: myInfo.password,
+        })
+            .then( res => {
+                    alert('정보 수정이 완료되었습니다.')
+                }
+            )
     }
 
 
@@ -38,7 +46,7 @@ function Mypage() {
                     <img src={process.env.PUBLIC_URL + '/head.png'} alt="head" /></a>
             </header>
 
-            <form onSubmit={modify}>
+            <form onSubmit={update}>
             <div className="my-info">
                 <TextField label="email" type="email" value={myInfo.email}/>
                 <TextField label="password" type="password" value={myInfo.password}

@@ -7,7 +7,6 @@ export function CategoryProvider(props) {
 
     const [categories, setCategories] = useState([
         { mainCategory: 'POST', subCategories: ['news', 'post', 'event'] },
-        { mainCategory: 'CONTACT US', subCategories: ['chat','send email'] },
     ]);
 
     return (

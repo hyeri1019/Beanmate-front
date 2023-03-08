@@ -14,6 +14,7 @@ import {TransitionGroup, CSSTransition} from "react-transition-group";
 import LoginButton from "./LoginButton";
 import {CategoryContext} from "../CategoryContext";
 import {Drawer, ListItemText} from "@mui/material";
+import CategoryMenu from "./CategoryMenu";
 
 
 function Board() {
@@ -86,27 +87,11 @@ function Board() {
                     <img src={process.env.PUBLIC_URL + '/head.png'} alt="head" /></a>
             </header>
 
-        <LoginButton></LoginButton>
+        <div className="login-button">
+            <LoginButton />
+        </div>
 
-        {/*<div className="category-menu">*/}
-        {/*    <Drawer className="menu-bar"*/}
-        {/*            variant="permanent">*/}
-        {/*        <CustomPaper>*/}
-        {/*        <div>*/}
-        {/*            <CustomList className="menu-line">*/}
-        {/*                {categories.map((a, i) => (*/}
-        {/*                    <CustomListItemButton button onClick={async()=>{*/}
-        {/*                        setCategory(a);*/}
-        {/*                        await navigate(`/board/${a}/1`);*/}
-        {/*                    }}>*/}
-        {/*                        <ListItemText primary={a}></ListItemText>*/}
-        {/*                    </CustomListItemButton>*/}
-        {/*                ))}*/}
-        {/*            </CustomList>*/}
-        {/*        </div>*/}
-        {/*        </CustomPaper>*/}
-        {/*    </Drawer>*/}
-        {/*</div>*/}
+        <CategoryMenu></CategoryMenu>
 
 
 

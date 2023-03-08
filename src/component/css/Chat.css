@@ -1,0 +1,41 @@
+.chat-container {
+    background-color: rgb(255, 222, 222);
+    max-height: 60%;
+}
+.message-box {
+    background-color: rgb(255, 222, 222);
+    justify-content: center;
+}
+
+.message {
+    font-size: 30px;
+    font-family: 'Dongle', sans-serif;
+}
+
+.sender {
+    font-family: 'Abel', sans-serif;
+    font-size: 20px;
+    color: #c1a5fc;
+}
+
+
+.send-box {
+    background-color: rgb(255, 222, 222);
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+    margin-bottom: 3%;
+    min-height: 100px;
+    min-width: 400px;
+
+}
+
+.send-button {
+    min-height: 100px;
+}
+
+input {
+    min-width: 500px;
+}
+
+

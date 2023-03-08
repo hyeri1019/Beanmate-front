@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import {Button, TableCell, ListItem, List, ListItemText} from '@mui/material';
+import {Button, TableCell, ListItem, List, ListItemText, Box} from '@mui/material';
 import { Drawer, Paper } from "@mui/material";
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 
@@ -83,4 +83,24 @@ export const CustomAccordion = styled(Accordion)({
 export const CustomTypography = styled(Typography)({
     fontFamily: 'Dongle',
     fontSize: '23px',
+});
+
+
+
+// 채팅
+
+export const ChatBubble = styled(Paper)((
+    { theme, position }) => ({
+    maxWidth: '80%',
+    padding: theme.spacing(1),
+    wordWrap: 'break-word',
+    marginBottom: theme.spacing(1),
+    alignSelf: position === 'right' ? 'flex-end' : 'flex-start',
+}));
+
+export const ChatBox = styled(Box)({
+    maxHeight: 400,
+    overflow: 'auto',
+    backgroundColor: '#fdb8b9',
+    height: '100%',
 });

@@ -24,8 +24,7 @@ function CategoryMenu() {
                 <CustomAccordion
                     key={index}
                     expanded={expanded === index}
-                    onChange={handleChange(index)}
-                >
+                    onChange={handleChange(index)}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                         <CustomTypography className="category-text">
                             {category.mainCategory}

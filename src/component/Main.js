@@ -1,8 +1,6 @@
 import {useState, useEffect, useRef, useCallback, useContext} from 'react';
 import Api from "../customApi";
 
-
-
 import "../component/css/Main.css"
 import {useLocation, useNavigate} from "react-router-dom";
 import LoginButton from "./LoginButton";
@@ -10,18 +8,6 @@ import PostModal from "./PostModal";
 import {CategoryContext} from "../CategoryContext";
 import CategoryMenu from "./CategoryMenu";
 
-
-import {Drawer, List, ListItem, ListItemText, Paper, Toolbar} from "@mui/material";
-import {
-    CustomButton,
-    CustomCategoryButton,
-    CustomDrawer,
-    CustomList,
-    CustomListItemButton, CustomListItemText,
-    CustomPaper
-} from './MyStyle';
-import MenuIcon from "@mui/icons-material/Menu";
-import Board from "./Board";
 
 function Main() {
 
@@ -108,27 +94,6 @@ function Main() {
             </div>
 
             <CategoryMenu></CategoryMenu>
-
-            {/*<div className="category-menu">*/}
-            {/*        <Drawer className="menu-bar" variant="permanent">*/}
-            {/*            <CustomPaper>*/}
-            {/*            <div>*/}
-            {/*                <CustomList className="menu-line">*/}
-            {/*                    {categories.map((a, i) => (*/}
-            {/*                    <CustomListItemButton  button onClick={async()=>{*/}
-            {/*                        setCategory(a);*/}
-            {/*                        await navigate(`/board/${category}/1`);*/}
-            {/*                    }}>*/}
-            {/*                        <ListItemText primary={a}></ListItemText>*/}
-            {/*                    </CustomListItemButton>*/}
-            {/*                        ))}*/}
-            {/*                </CustomList>*/}
-            {/*            </div>*/}
-            {/*            </CustomPaper>*/}
-
-            {/*        </Drawer>*/}
-            {/*</div>*/}
-
 
                 <div className="post-container">
                     {list.map((post) => (

@@ -17,6 +17,7 @@ function LoginButton() {
                         localStorage.removeItem("accessToken");
                         localStorage.removeItem("refreshToken");
                         localStorage.removeItem("accessTokenExpiresIn");
+                        localStorage.removeItem("email");
                         setIsLoggedIn(false);
                         navigate("/");
                     }}

@@ -15,30 +15,34 @@ function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
     }]);
 
     let navigate = useNavigate();
-
-
-    console.log(localStorage.getItem("email"));
-
     
     const login = (e) => {
         e.preventDefault();
+
+        if (!userInfo.email || !userInfo.password) {
+            alert('아이디 또는 비밀번호를 입력해주세요.');
+            return;
+        }
+
         Api
             .post('/auth/login', { // 로그인 요청
                 email: userInfo.email,
                 password: userInfo.password
             })
-            .then(response => {
+            .then(res => {
                     localStorage.setItem("email",userInfo.email);
 
-                    localStorage.setItem("accessToken", response.data.accessToken);
-                    localStorage.setItem("refreshToken", response.data.refreshToken);
-                    localStorage.setItem("accessTokenExpiresIn", response.data.accessTokenExpiresIn);
-                    setAccessToken(response.data.accessToken);
-                    setRefreshToken(response.data.refreshToken);
-                    navigate('/');}
-                );
+                    localStorage.setItem("accessToken", res.data.accessToken);
+                    localStorage.setItem("refreshToken", res.data.refreshToken);
+                    localStorage.setItem("accessTokenExpiresIn", res.data.accessTokenExpiresIn);
+                    setAccessToken(res.data.accessToken);
+                    setRefreshToken(res.data.refreshToken);
+                    navigate('/');
+            })
+            .catch(error => {
+                alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+        });
     };
-
 
 
     return (
@@ -55,12 +59,9 @@ function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
             <br/>
             <CustomLoginButton type="submit">로그인</CustomLoginButton>
         </form>
-
         </>
 
-
     );
-
 }
 
 export default Login;

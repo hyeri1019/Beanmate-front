@@ -14,7 +14,6 @@ function LeftMenu({ isOpen, onClose }) {
 
     const list = () => (
         <div
-            className={classes.list}
             role="presentation"
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}

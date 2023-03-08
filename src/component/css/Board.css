@@ -59,6 +59,12 @@
 
 }
 
+.login-button {
+    position: relative;
+    flex-wrap: wrap;
+    margin-left: 90%;
+}
+
 .boardPost {
     font-family: "Noto Sans KR", sans-serif;
     min-height: 20vh;
