@@ -1,11 +1,14 @@
-import { useState } from "react";
+import {useContext, useState} from "react";
 import { Select, MenuItem } from '@mui/material';
 import { TextField, Button } from '@mui/material';
 import { CustomButton } from './MyStyle';
 import {useNavigate} from "react-router-dom";
+import {CategoryContext} from "../CategoryContext";
 
 
     function SearchBar({setPage, page, options, onSearch}) {
+
+        const { category, setCategory } = useContext(CategoryContext);
 
         var navigate = useNavigate()
 
@@ -20,8 +23,8 @@ import {useNavigate} from "react-router-dom";
                 <SearchKeyword onChange={setKeyword} />
                 <CustomButton variant="contained" onClick={()=> {
                     setPage(1);
-                    navigate('/board/1')
-                    onSearch(option, keyword, 1);
+                    navigate('/board/'+category+'/'+1)
+                    onSearch(category, option, keyword, 1);
                 }}>검색</CustomButton>
             </>
         )

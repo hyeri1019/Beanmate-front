@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import {Button, TableCell, ListItem, List, ListItemText, Box} from '@mui/material';
+import {Button, TableCell, ListItem, List, ListItemText, Box, IconButton} from '@mui/material';
 import { Drawer, Paper } from "@mui/material";
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 
@@ -17,7 +17,7 @@ export const CustomLoginButton = styled(Button)({
     backgroundColor: '#fdb8b9',
     width: '300px',
     height: '50px',
-    margin : '20px 0 30px 0',
+    margin : '50px 0 30px 0',
     '&:hover': {
         backgroundColor: '#c1a5fc',
 
@@ -85,6 +85,10 @@ export const CustomTypography = styled(Typography)({
     fontSize: '23px',
 });
 
+export const CustomFavoriteIcon = styled(IconButton)({
+    color: '#fdb8b9',
+
+});
 
 
 // 채팅

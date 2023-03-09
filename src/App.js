@@ -18,6 +18,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import axios from "axios";
 import {CategoryProvider} from "./CategoryContext";
 import Chat from "./Chat";
+import Like from "./component/Like";
 
 
 function App() {

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import Api from "../customApi";
 import { TextField } from '@mui/material';
-import "./Login.css"
+import "./css/Login.css"
 import { CustomLoginButton } from "./MyStyle";
 
 
@@ -48,6 +48,7 @@ function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
     return (
         <>
         <form onSubmit={login}>
+            <h1>login</h1>
             <br/>
             <div className="login-box">
                 <TextField label="email" type="email" value={userInfo.email}
@@ -56,7 +57,11 @@ function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
                 <TextField label="password" type="password" value={userInfo.password}
                        onChange={e => setUserInfo({...userInfo, password: e.target.value})}/>
             </div>
-            <br/>
+
+            <div className="sign-up" onClick={()=>{
+                navigate('/sign-up');}
+            }>아직 계정이 없으신가요?</div>
+
             <CustomLoginButton type="submit">로그인</CustomLoginButton>
         </form>
         </>

@@ -46,8 +46,6 @@ function Board() {
     }])
 
     const { category, setCategory } = useContext(CategoryContext);
-    const { categories } = useContext(CategoryContext);
-
     const arr = [];
         for (let i = paging.startPage; i <= paging.endPage; i++) {
             arr.push(i);
@@ -60,7 +58,7 @@ function Board() {
 
         setOption(option)
         setKeyword(keyword)
-        console.log('dd')
+
 
        await Api.get('/boards?category='+category+'&page='+page+'&option='+option+'&keyword='+keyword)
              .then(res => { setBoardList(res.data.posts);

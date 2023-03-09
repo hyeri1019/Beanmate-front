@@ -2,6 +2,7 @@ import {useState, useEffect, useCallback} from "react";
 import axios from 'axios'
 import {useNavigate, useParams} from "react-router-dom";
 import Api from "../customApi";
+import CommentList from "./CommentList";
 
 function Post(props) {
 
@@ -74,7 +75,7 @@ function Post(props) {
         if(modBtn===true)
         Api.patch('http://localhost:8080/board?pno=' + pno,
             {
-                title: post.title, content: post.content
+                ...post
             },
             {
                 headers: {'Content-Type': 'application/json'}
@@ -93,6 +94,7 @@ function Post(props) {
 
         <img src={`http://localhost:8080/uploads/${post.imageName}`} alt="이미지" />
 
+        <CommentList pno={pno}></CommentList>
 
 
             <div className="modify-post">
