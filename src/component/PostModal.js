@@ -19,7 +19,7 @@ const PostModal = ({ post, isOpen, onRequestClose }) => {
                     <CommentList pno={post.pno}></CommentList>
                 </Grid>
             </Grid>
-            <Like></Like>
+            <Like pno={post.pno}></Like>
         </Modal>
     );
 };

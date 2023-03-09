@@ -1,13 +1,25 @@
 import { IconButton } from '@mui/material';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import {CustomFavoriteIcon} from "./MyStyle";
+import Api from "../customApi";
 
-function Like() {
+function Like({pno}) {
     const [liked, setLiked] = useState(false);
+
+    useEffect(()=> {
+        Api.get('/likes?pno='+pno)
+            .then(res => {
+                setLiked(res.data);
+            })
+
+    },[pno])
 
     const handleClick = () => {
         setLiked(!liked);
+
+        Api.post('/likes?pno='+pno)
+
     };
 
     return (

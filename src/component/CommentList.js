@@ -31,6 +31,9 @@ function CommentList({ pno }) {
     return (
         <div>
             <h2>댓글</h2>
+            {comments.length === 0 ? (
+                <p>댓글이 없습니다</p>
+        ) : (
             <ul>
                 {comments.map(comment => (
                     <li key={comment.cno}>
@@ -39,6 +42,7 @@ function CommentList({ pno }) {
                     </li>
                 ))}
             </ul>
+        )}
         </div>
     );
 }

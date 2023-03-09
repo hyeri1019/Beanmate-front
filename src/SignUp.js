@@ -4,27 +4,31 @@ import axios from 'axios'
 function SignUp() {
 
     const [userInfo, setUserInfo] = useState([{
-        email: '', password: ''
+        email: '', name: '', password: ''
     }]);
 
     const [button, setButton] = useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(userInfo.password, userInfo.email);
 
         axios.post('http://localhost:8080/auth/signup',
             {
-                email: userInfo.email, password: userInfo.password
+                email: userInfo.email, name: userInfo.name, password: userInfo.password
             })
     }
 
     return (
         <form onSubmit={handleSubmit}>
             <label>
-                Email:
+                이메일:
                 <input type="email" value={userInfo.email}
                        onChange={e => setUserInfo({...userInfo, email: e.target.value})}/>
+            </label>
+            <label>
+                이름:
+                <input type="name" value={userInfo.name}
+                       onChange={e => setUserInfo({...userInfo, name: e.target.value})}/>
             </label>
             <br/>
             <label>
