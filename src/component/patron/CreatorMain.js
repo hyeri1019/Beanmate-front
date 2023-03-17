@@ -1,18 +1,21 @@
 import {useState, useEffect, useRef, useCallback, useContext} from 'react';
-import Api from "../customApi";
+import Api from "../../customApi";
 
-import "../component/css/Main.css"
-import {useLocation, useNavigate} from "react-router-dom";
-import LoginButton from "./LoginButton";
-import PostModal from "./PostModal";
-import {CategoryContext} from "../CategoryContext";
-import CategoryMenu from "./CategoryMenu";
+import "../css/Main.css"
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import LoginButton from "../LoginButton";
+import PostModal from "../PostModal";
+import {CategoryContext} from "../../CategoryContext";
+import CategoryMenu from "../CategoryMenu";
+import ShowPatronTier from "./ShowPatronTier";
 
 
-function Main() {
+function CreatorMain() {
 
     const navigate = useNavigate();
     const location = useLocation();
+
+    let {creator} = useParams();
 
 
     const [list, setList] = useState([]);
@@ -28,7 +31,7 @@ function Main() {
             setHasMore(data.pagination.hasPrev);
             setIsLoading(false);
         });
-    }, [currentPage]);
+    }, [currentPage, creator]);
 
     const handleObserver = async (entries) => {
         const target = entries[0];
@@ -47,10 +50,11 @@ function Main() {
 
     const getPosts = useCallback(async (page) => {
         setIsLoading(true);
-        const response = await Api.get(`/feeds?page=${page}`);
+        console.log('********')
+        const response = await Api.get('/creator?creator='+creator+'&page='+page);
         setIsLoading(false);
         return response.data;
-    }, []);
+    }, [creator]);
 
     /*    모달창    */
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -89,18 +93,24 @@ function Main() {
             </header>
 
             <div className="login-button">
-            <LoginButton />
+                <LoginButton />
             </div>
+
+            <ShowPatronTier creator={creator}></ShowPatronTier>
+
+
 
             <CategoryMenu></CategoryMenu>
 
-                <div className="post-container">
-                    {list.map((post) => (
-                        <div key={post.pno} className="post" onClick={() => handlePostClick(post)}>
-                            <img src={`http://localhost:8080/uploads/${post.imageName}`} alt="이미지"/>
-                        </div>
-                    ))}
-                </div>
+
+
+            <div className="post-container">
+                {list.map((post) => (
+                    <div key={post.pno} className="post" onClick={() => handlePostClick(post)}>
+                        <img src={`http://localhost:8080/uploads/${post.imageName}`} alt="이미지"/>
+                    </div>
+                ))}
+            </div>
 
             {isLoading && (
                 <img src={process.env.PUBLIC_URL + '/loading.png'} alt="loading"/>
@@ -115,4 +125,4 @@ function Main() {
         </>
     );
 }
-export default Main;
+export default CreatorMain;

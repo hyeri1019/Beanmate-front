@@ -26,7 +26,7 @@ function SignUp() {
                        onChange={e => setUserInfo({...userInfo, email: e.target.value})}/>
             </label>
             <label>
-                이름:
+                닉네임:
                 <input type="name" value={userInfo.name}
                        onChange={e => setUserInfo({...userInfo, name: e.target.value})}/>
             </label>

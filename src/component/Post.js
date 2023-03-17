@@ -3,6 +3,7 @@ import axios from 'axios'
 import {useNavigate, useParams} from "react-router-dom";
 import Api from "../customApi";
 import CommentList from "./CommentList";
+import Like from "./Like";
 
 function Post(props) {
 
@@ -22,7 +23,7 @@ function Post(props) {
 
 
     const [post, setPost] = useState([{
-        pno: '', title: '', writer: '', content:'', viewCnt: '', imagePath: '', imageName: ''
+        pno: '', title: '', writer: '', content:'', viewCnt: '', imagePath: '', imageName: '', likeCnt: 0,
 }])
 
     let modifyHandler = (e) => {
@@ -50,7 +51,7 @@ function Post(props) {
 
     /*   선택한 게시물 읽기   */
     useEffect(  ()=>{
-          Api.get('http://localhost:8080/board?pno='+Number(pno))
+          Api.get('/board?pno='+Number(pno))
             .then(res=>setPost(res.data))
     },[pno])
 
@@ -58,7 +59,7 @@ function Post(props) {
     /*    게시물 삭제   */
     useEffect(()=>{
         if(delBtn === true) {
-            Api.delete(`http://localhost:8080/board?pno=${pno}`)
+            Api.delete(`/board?pno=${pno}`)
                 .then(() => {
                     alert('게시물이 삭제되었습니다.');
                     navigate('/board/1');
@@ -73,7 +74,7 @@ function Post(props) {
     /*    게시물 수정    */
     useEffect(()=>{
         if(modBtn===true)
-        Api.patch('http://localhost:8080/board?pno=' + pno,
+        Api.patch('/board?pno=' + pno,
             {
                 ...post
             },
@@ -93,6 +94,8 @@ function Post(props) {
                         onChange={modifyHandler}/>
 
         <img src={`http://localhost:8080/uploads/${post.imageName}`} alt="이미지" />
+
+        <Like pno={pno}></Like>
 
         <CommentList pno={pno}></CommentList>
 

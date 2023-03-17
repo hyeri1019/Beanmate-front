@@ -38,4 +38,12 @@ input {
     min-width: 500px;
 }
 
-
+.chat {
+    position: relative;
+    margin-bottom: 1rem;
+    max-width: 50%;
+    word-wrap: break-word;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #f7f7f7;
+}

@@ -15,6 +15,7 @@ import LoginButton from "./LoginButton";
 import {CategoryContext} from "../CategoryContext";
 import {Drawer, ListItemText} from "@mui/material";
 import CategoryMenu from "./CategoryMenu";
+import Like from "./Like";
 
 
 function Board() {
@@ -38,7 +39,7 @@ function Board() {
 
 
     const [boardList, setBoardList] = useState([{
-        pno: '', title: '', writer: '', viewCnt: '', category: '',
+        pno: '', title: '', writer: '', viewCnt: '', category: '', likeCnt: 0,
     }])
 
     const [paging, setPaging] = useState([{
@@ -111,12 +112,16 @@ function Board() {
                                     navigate('/board/' +category+'/' + pages + '/' + post.pno)}>
                                     {post.title}
                                 </div>
-                                <div className="postWriter">
-                                    작성자: {post.writer.split('@')[0]}
+                                <div className="postWriter" onClick={() =>
+                                navigate('/creator/'+post.writer)}>
+                                    작성자: {post.writer}
                                 </div>
                                 <div className="postViewCnt">
                                     조회수: {post.viewCnt}
                                 </div>
+
+                                <Like pno={post.pno}></Like>
+
                             </div>
                         </div>
                     ))}

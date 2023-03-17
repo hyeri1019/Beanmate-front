@@ -1,0 +1,29 @@
+.tier-container {
+    padding: 1rem;
+    margin-bottom: 5rem;
+}
+
+.tier-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.tier {
+
+    margin-bottom: 1rem;
+    padding-left: 20%;
+    padding-right: 10%;
+}
+
+.tier-title {
+    font-weight: bold;
+}
+
+.tier-amount {
+    color: gray;
+}
+
+.tier-benefits {
+    color: green;
+}

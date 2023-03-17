@@ -26,3 +26,11 @@ form {
     margin-top: 10px;
     font-size: 17px;
 }
+
+.kakao-login {
+    margin-top: 20px;
+}
+
+img:hover {
+    cursor: pointer;
+}

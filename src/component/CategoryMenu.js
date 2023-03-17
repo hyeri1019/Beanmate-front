@@ -36,8 +36,12 @@ function CategoryMenu() {
                                 <CustomListItemButton
                                     key={subIndex}
                                     onClick={() => {
-                                        setCategory(subCategory);
-                                        navigate(`/board/${subCategory}/1`);
+                                        if (category.mainCategory === 'CONTACT US') {
+                                            navigate('/chat');
+                                        } else {
+                                            setCategory(subCategory);
+                                            navigate(`/board/${subCategory}/1`);
+                                        }
                                     }}
                                 >
                                     <ListItemText primary={subCategory} />

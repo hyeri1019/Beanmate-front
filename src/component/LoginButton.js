@@ -8,6 +8,23 @@ function LoginButton() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("accessTokenExpiresIn"));
 
+    useEffect(() => {
+        if (isLoggedIn) {
+            const oneHourInMilliseconds = 1000 * 60 * 60;
+
+            const timer = setTimeout(() => {
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
+                localStorage.removeItem("accessTokenExpiresIn");
+                localStorage.removeItem("email");
+                setIsLoggedIn(false);
+                navigate("/");
+            }, oneHourInMilliseconds);
+
+            return () => clearTimeout(timer);
+        }
+    }, [isLoggedIn, navigate]);
+
 
     return (
         <div className="loginButton">

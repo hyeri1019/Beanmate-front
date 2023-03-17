@@ -5,6 +5,7 @@ import Api from "../customApi";
 import { TextField } from '@mui/material';
 import "./css/Login.css"
 import { CustomLoginButton } from "./MyStyle";
+import KakaoLogin from "./kakao/KakaoLogin";
 
 
 function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
@@ -61,6 +62,8 @@ function Login({refreshToken, accessToken, setAccessToken, setRefreshToken}) {
             <div className="sign-up" onClick={()=>{
                 navigate('/sign-up');}
             }>아직 계정이 없으신가요?</div>
+
+            <KakaoLogin></KakaoLogin>
 
             <CustomLoginButton type="submit">로그인</CustomLoginButton>
         </form>

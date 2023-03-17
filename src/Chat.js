@@ -58,7 +58,7 @@ function Chat() {
     useEffect(() => {
         Api.get('/me')
             .then(res => {
-                setSender(res.data.email);
+                setSender(res.data);
             });
     },[]);
 

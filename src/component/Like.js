@@ -6,6 +6,7 @@ import Api from "../customApi";
 
 function Like({pno}) {
     const [liked, setLiked] = useState(false);
+    const [likeCnt, setLikeCnt] = useState(0);
 
     useEffect(()=> {
         Api.get('/likes?pno='+pno)
@@ -15,10 +16,22 @@ function Like({pno}) {
 
     },[pno])
 
+    useEffect(()=> {
+        Api.get('/board?pno='+pno)
+            .then(res => {
+                setLikeCnt(res.data.likeCnt);
+            })
+
+    },[pno])
+
+
     const handleClick = () => {
         setLiked(!liked);
 
         Api.post('/likes?pno='+pno)
+            .then(()=> {
+                setLikeCnt(liked ? likeCnt-1 : likeCnt+1);
+            })
 
     };
 
@@ -33,6 +46,7 @@ function Like({pno}) {
                     <FavoriteBorder />
                 </CustomFavoriteIcon>
             )}
+            {likeCnt}
         </div>
     );
 }
