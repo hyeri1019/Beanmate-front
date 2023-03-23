@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+[ Single Page Application ]
+React-Hooks 를 이용하여 동적으로 상태를 관리하며, 모든 페이지가 비동기로 작동하여 사용자의 서비스 이용 흐름을 저해하지 않도록 했습니다.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[ 토큰 기반의 사용자 권한 확인 및 인증 처리 ]
+Stateless 환경에서 로그인 상태 유지를 위해 Json Web Token 을 이용 했으며, 토큰으로 서버에 사용자 인증 요청을 할 수 있습니다.
 
-## Available Scripts
+[ 카카오 API 를 이용한 로그인/회원가입 ]
+카카오 API를 호출하여 인가 코드를 받아 서버에 전송하고, 서버가 해당 정보를 기반으로 사용자 인증 처리 및 토큰을 생성할 수 있도록 했습니다.
 
-In the project directory, you can run:
+[ 만료된 토큰 자동 재발급 기능 ]
+요청 이전에 accessToken 의 유효기간을 체크하고 만료된 토큰인 경우 서버로 재발급 요청을을 먼저 보내며, 변경된 토큰 정보를 업데이트하여 유효한 토큰으로 인증 요청할 수 있도록
+Axios Interceptor를 구현했습니다.
 
-### `npm start`
+[ 권한에 따른 게시물 열람 제한 기능 ]
+사용자는 모든 게시물의 목록은 볼 수 있지만, 특정 권한이 없는 게시물의 경우에는 별도로 설정한 접근 제한 이미지가 출력되며 내용에 접근할 수 없도록 했습니다.
+토큰으로 서버에 사용자 권한 확인 및 인증을 요청하며, 응답 데이터에 따라 각 게시물의 상태를 업데이트 합니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[ 무한 스크롤(Infinite Scroll) ]
+사용자가 별도로 페이지 숫자를 클릭하는 행위 없이 스크롤만 내려도 게시물들을 확인할 수 있도록 IntersectionObserver를 이용하여 무한 스크롤 기능을 구현했습니다.
+한 번의 스크롤에 페이지네이션이 적용된 게시물 개수만큼 로드하며, 사용자가 스크롤을 내릴 때마다 새로운 데이터를 출력합니다. 또한 스크롤 이후 데이터가 로딩중일 때에는 로딩중임을 나타내는 이미지가 출력되게 하였습니다.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[ WebSocket 채팅 기능 ]
+SockJS + Stomp 라이브러리를 이용하여 여러 환경에서도 WebSocket 통신을 지원할 수 있도록 했습니다. 
+사용자들은 특정 대화방에 참여할 수 있고, 해당 대화방에 접속중인 사용자 끼리 실시간으로 채팅을 주고 받을 수 있습니다.
